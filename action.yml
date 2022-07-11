@@ -19,8 +19,8 @@ runs:
   using: composite
   steps:
   - run: |
-      chmod +x "${github.action_path}/notify.sh"
-      "${github.action_path}/notify.sh"
+      chmod +x "${{ github.action_path }}/notify.sh"
+      "${{ github.action_path }}/notify.sh"
     shell: bash
     env:
       APPLICATION: ${{ github.event.inputs.application || github.event.repository.name  }}
