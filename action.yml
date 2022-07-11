@@ -23,7 +23,7 @@ runs:
       "${{ github.action_path }}/notify.sh"
     shell: bash
     env:
-      APPLICATION: ${{ github.event.inputs.application || github.event.repository.name  }}
-      BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
-      TRIGGERED_BY: ${{ github.event.inputs.triggeredBy || github.actor }}
-      MESSAGE: ${{ github.event.inputs.message || github.event.head_commit.message }}
+      APPLICATION: ${{ inputs.application || github.event.repository.name  }}
+      BRANCH: ${{ inputs.branch || github.ref_name }}
+      TRIGGERED_BY: ${{ inputs.triggeredBy || github.actor }}
+      MESSAGE: ${{ inputs.message || github.event.head_commit.message }}
