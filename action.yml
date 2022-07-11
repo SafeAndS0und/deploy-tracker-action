@@ -1,0 +1,27 @@
+name: 'Deploy Tracker Action'
+description: 'Deploy Tracker '
+
+inputs:
+  application:
+    description: 'Application Name'
+    required: false
+  branch:
+    description: 'Branch name'
+    required: false
+  triggeredBy:
+    description: 'Name of the person who triggered the action'
+    required: false
+  message:
+    description: 'Message'
+    required: false
+
+runs:
+  using: composite
+  steps:
+  - run: ${{ github.action_path }}/notify.sh
+    shell: bash
+    env:
+      APPLICATION: ${{ github.event.inputs.application || github.event.repository.name  }}
+      BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
+      TRIGGERED_BY: ${{ github.event.inputs.triggeredBy || github.actor }}
+      MESSAGE: ${{ github.event.inputs.message || github.event.head_commit.message }}
