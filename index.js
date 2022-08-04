@@ -16,13 +16,27 @@ const handleArrayValue = (str) => {
   return str ? str.split(/[,]+/) : undefined
 }
 
+// https://docs.github.com/en/actions/learn-github-actions/contexts#job-context
+const translateJobStatus = (str) => {
+  switch (str) {
+    case "success":
+      return "SUCCESS"
+    case "failure":
+      return "FAILURE"
+    case "cancelled":
+      return "CANCEL"
+    default:
+      return undefined
+  }
+}
+
 const main = async () => {
   try {
     const dtAccessToken = core.getInput('dt-access-token');
 
     const body = {
       application: core.getInput('application') || github.context.payload.repository.name,
-      status: core.getInput('status') || 'SUCCESS',
+      status: translateJobStatus(core.getInput('status')) || 'SUCCESS',
       environment: core.getInput('environment') || undefined,
       message: core.getInput('message') || github.context.payload?.head_commit?.message || github.context.payload?.commits?.[0]?.message,
       triggeredBy: core.getInput('triggeredBy') || github.context.actor,
@@ -38,6 +52,7 @@ const main = async () => {
     }
 
     console.log(body);
+    console.log(process?.env)
 
     const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
