@@ -6,9 +6,38 @@ const main = async () => {
     try {
         const dtAccessToken = core.getInput('dt-access-token');
         const application = core.getInput('application');
-        const branch = core.getInput('branch');
-        const triggeredBy = core.getInput('triggeredBy');
+        const status = core.getInput('status');
+        const environment = core.getInput('environment');
         const message = core.getInput('message');
+        const triggeredBy = core.getInput('triggeredBy');
+        const branch = core.getInput('branch');
+        const version = core.getInput('version');
+        const ticket = core.getInput('ticket');
+        const jobUrl = core.getInput('jobUrl');
+        const jobId = core.getInput('jobId');
+        const tags = core.getInput('tags');
+        const teams = core.getInput('teams');
+        const silent = core.getInput('silent');
+        const ephemeral = core.getInput('ephemeral');
+
+        console.log(JSON.stringify(github.context, null, 2));
+
+        const body = {
+            application: application || '',
+            status: status || 'SUCCESS',
+            environment: environment || '',
+            message: message || '',
+            triggeredBy: triggeredBy || '',
+            branch: branch || '',
+            version: version || '',
+            ticket: ticket || '',
+            jobUrl: jobUrl || '',
+            jobId: jobId || '',
+            tags: tags || '',
+            teams: teams || '',
+            silent: silent || '',
+            ephemeral: ephemeral || '',
+        }
 
         const response = await fetch("https://api.deploytracker.io/notify", {
             method: "POST",
@@ -16,16 +45,10 @@ const main = async () => {
                 "Content-type": "application/json",
                 "dt-access-token": dtAccessToken,
             },
-            body: JSON.stringify({
-                application,
-                triggeredBy,
-                branch,
-                message,
-                version: "1.0.0",
-                status: "SUCCESS",
-            }),
-        });
-        console.log(response);
+            body: JSON.stringify(body),
+        })
+        console.log(response.status);
+
     } catch (error) {
         core.setFailed(error.message);
     }

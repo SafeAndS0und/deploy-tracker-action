@@ -8,14 +8,44 @@ inputs:
   application:
     description: 'Application Name'
     required: false
-  branch:
-    description: 'Branch name'
+  status:
+    description: 'Status of the deployment'
+    required: false
+  environment:
+    description: 'Environment'
+    required: false
+  message:
+    description: 'Message'
     required: false
   triggeredBy:
     description: 'Name of the person who triggered the action'
     required: false
-  message:
-    description: 'Message'
+  branch:
+    description: 'Branch name'
+    required: false
+  version:
+    description: 'Version'
+    required: false
+  ticket:
+    description: 'Ticket'
+    required: false
+  jobUrl:
+    description: 'Job URL'
+    required: false
+  jobId:
+    description: 'Job ID'
+    required: false
+  tags:
+    description: 'Tags'
+    required: false
+  teams:
+    description: 'Teams'
+    required: false
+  silent:
+    description: "Silent - notification won't be sent"
+    required: false
+  ephemeral:
+    description: "Ephemeral - notification won't be saved in Deploy Tracker's database"
     required: false
 
 runs:
