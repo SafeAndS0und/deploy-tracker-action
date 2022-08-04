@@ -16041,7 +16041,7 @@ const getBranchName = (ref) => {
 }
 
 const handleBooleanValue = (str) => {
-  return str && str === 'true' || false
+  return str && str === 'true' || undefined
 }
 
 const handleArrayValue = (str) => {
