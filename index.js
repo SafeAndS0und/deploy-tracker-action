@@ -45,25 +45,32 @@ const translateJobStatus = (str) => {
   }
 }
 
+const getInputValue = (field) => {
+  if(field === '-') {
+    return undefined
+  }
+  return core.getInput(field)
+}
+
 const main = async () => {
   try {
     const dtAccessToken = core.getInput('dt-access-token');
 
     const body = {
-      application: core.getInput('application') || github.context.payload.repository.name,
-      status: translateJobStatus(core.getInput('status')) || 'SUCCESS',
-      environment: core.getInput('environment') || undefined,
-      message: core.getInput('message') || github.context.payload?.head_commit?.message || github.context.payload?.commits?.[0]?.message,
-      triggeredBy: core.getInput('triggeredBy') || github.context.actor,
-      branch: core.getInput('branch') || getBranchName(github.context.ref) || undefined,
-      version: core.getInput('version') || getVersionFromTag(github.context.ref) || undefined,
-      ticket: core.getInput('ticket') || undefined,
-      jobUrl: core.getInput('jobUrl') || getJobUrl(github.context.payload.repository.html_url, github.context.runId) || github.context.payload?.head_commit?.url,
-      jobId: core.getInput('jobId') || github.context.runId.toString(),
-      tags: handleArrayValue(core.getInput('tags')),
-      teams: handleArrayValue(core.getInput('teams')),
-      silent: handleBooleanValue(core.getInput('silent')),
-      ephemeral: handleBooleanValue(core.getInput('ephemeral')),
+      application: getInputValue('application') || github.context.payload.repository.name,
+      status: translateJobStatus(getInputValue('status')) || 'SUCCESS',
+      environment: getInputValue('environment') || undefined,
+      message: getInputValue('message') || github.context.payload?.head_commit?.message || github.context.payload?.commits?.[0]?.message,
+      triggeredBy: getInputValue('triggeredBy') || github.context.actor,
+      branch: getInputValue('branch') || getBranchName(github.context.ref) || undefined,
+      version: getInputValue('version') || getVersionFromTag(github.context.ref) || undefined,
+      ticket: getInputValue('ticket') || undefined,
+      jobUrl: getInputValue('jobUrl') || getJobUrl(github.context.payload.repository.html_url, github.context.runId) || github.context.payload?.head_commit?.url,
+      jobId: getInputValue('jobId') || github.context.runId.toString(),
+      tags: handleArrayValue(getInputValue('tags')),
+      teams: handleArrayValue(getInputValue('teams')),
+      silent: handleBooleanValue(getInputValue('silent')),
+      ephemeral: handleBooleanValue(getInputValue('ephemeral')),
     }
 
     console.log(body)
