@@ -24,6 +24,13 @@ const handleArrayValue = (str) => {
   return str ? str.split(/[,]+/) : undefined
 }
 
+const getJobUrl = (repoUrl, runId) => {
+  if (!repoUrl || !runId) {
+    return
+  }
+  return repoUrl + '/runs/' + runId
+}
+
 // https://docs.github.com/en/actions/learn-github-actions/contexts#job-context
 const translateJobStatus = (str) => {
   switch (str) {
@@ -51,13 +58,15 @@ const main = async () => {
       branch: core.getInput('branch') || getBranchName(github.context.ref) || undefined,
       version: core.getInput('version') || getVersionFromTag(github.context.ref) || undefined,
       ticket: core.getInput('ticket') || undefined,
-      jobUrl: core.getInput('jobUrl') || github.context.payload?.head_commit?.url,
+      jobUrl: core.getInput('jobUrl') || getJobUrl(github.context.payload.repository.html_url, github.context.runId) || github.context.payload?.head_commit?.url,
       jobId: core.getInput('jobId') || github.context.runId.toString(),
       tags: handleArrayValue(core.getInput('tags')),
       teams: handleArrayValue(core.getInput('teams')),
       silent: handleBooleanValue(core.getInput('silent')),
       ephemeral: handleBooleanValue(core.getInput('ephemeral')),
     }
+
+    console.log(body)
 
     const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
