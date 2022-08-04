@@ -8959,15 +8959,36 @@ var __webpack_exports__ = {};
 
 // import fetch from 'node-fetch'
 
-try {
-    const dtAccessToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('dt-access-token');
-    const application = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('application');
-    const branch = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('branch');
-    const triggeredBy = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('triggeredBy');
-    const message = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('message');
-    console.log(dtAccessToken, application, branch, triggeredBy, message);
-} catch (error) {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
+const main = async () => {
+    try {
+        const dtAccessToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('dt-access-token');
+        const application = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('application');
+        const branch = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('branch');
+        const triggeredBy = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('triggeredBy');
+        const message = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('message');
+
+        const response = await fetch("https://api.deploytracker.io/notify", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                "dt-access-token": dtAccessToken,
+            },
+            body: JSON.stringify({
+                application,
+                triggeredBy,
+                branch,
+                message,
+                version: "1.0.0",
+                status: "SUCCESS",
+            }),
+        });
+        console.log(response);
+    } catch (error) {
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
+    }
 }
+
+main()
+
 })();
 
