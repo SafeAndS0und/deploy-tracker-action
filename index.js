@@ -2,6 +2,8 @@ import core from '@actions/core'
 import github from '@actions/github'
 import fetch from 'node-fetch'
 
+const notifyDeployTrackerEndpoint = "https://api.deploytracker.io/notify"
+
 const getBranchName = (ref) => {
   return ref.slice(ref.lastIndexOf('/') + 1)
 }
@@ -35,9 +37,8 @@ const main = async () => {
       ephemeral: handleBooleanValue(core.getInput('ephemeral')),
     }
 
-    console.log(body, 'body');
 
-    const request = await fetch("https://api.deploytracker.io/notify", {
+    const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -46,8 +47,13 @@ const main = async () => {
       body: JSON.stringify(body),
     }).catch(e => console.log(e))
 
-    console.log(request.status, 'status');
 
+    if (!response.ok) {
+      const text = await response.text();
+      console.log('Error: ', text)
+      console.log('Status: ', response.status)
+      console.log('Body: ', body)
+    }
 
   } catch (error) {
     core.setFailed(error.message);
