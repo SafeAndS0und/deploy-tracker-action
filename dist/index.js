@@ -16040,6 +16040,14 @@ const getBranchName = (ref) => {
   return ref.slice(ref.lastIndexOf('/') + 1)
 }
 
+const handleBooleanValue = (str) => {
+  return str && str === 'true' || false
+}
+
+const handleArrayValue = (str) => {
+  return str ? str.split(/[,]+/) : undefined
+}
+
 const main = async () => {
   try {
     const dtAccessToken = core.getInput('dt-access-token');
@@ -16055,10 +16063,10 @@ const main = async () => {
       ticket: core.getInput('ticket') || undefined,
       jobUrl: core.getInput('jobUrl') || github.context.payload.head_commit.url,
       jobId: core.getInput('jobId') || github.context.runId.toString(),
-      tags: core.getInput('tags') || undefined,
-      teams: core.getInput('teams') || undefined,
-      silent: core.getInput('silent') || undefined,
-      ephemeral: core.getInput('ephemeral') || undefined,
+      tags: handleArrayValue(core.getInput('tags')),
+      teams: handleArrayValue(core.getInput('teams')),
+      silent: handleBooleanValue(core.getInput('silent')),
+      ephemeral: handleBooleanValue(core.getInput('ephemeral')),
     }
 
     console.log(body, 'body');
