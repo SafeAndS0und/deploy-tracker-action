@@ -29,8 +29,7 @@ const main = async () => {
       branch: core.getInput('branch') || getBranchName(github.context.ref) || undefined,
       version: core.getInput('version') || undefined,
       ticket: core.getInput('ticket') || undefined,
-      // jobUrl: core.getInput('jobUrl') || github.context.payload?.head_commit?.url,
-      jobUrl:123,
+      jobUrl: core.getInput('jobUrl') || github.context.payload?.head_commit?.url,
       jobId: core.getInput('jobId') || github.context.runId.toString(),
       tags: handleArrayValue(core.getInput('tags')),
       teams: handleArrayValue(core.getInput('teams')),
@@ -38,6 +37,7 @@ const main = async () => {
       ephemeral: handleBooleanValue(core.getInput('ephemeral')),
     }
 
+    console.log(body);
 
     const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
