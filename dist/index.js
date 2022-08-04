@@ -16071,7 +16071,7 @@ const main = async () => {
 
     console.log(body, 'body');
 
-    await fetch("https://api.deploytracker.io/notify", {
+    const request = await fetch("https://api.deploytracker.io/notify", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -16079,6 +16079,9 @@ const main = async () => {
       },
       body: JSON.stringify(body),
     }).catch(e => console.log(e))
+
+    console.log(request.status, 'status');
+
 
   } catch (error) {
     core.setFailed(error.message);
