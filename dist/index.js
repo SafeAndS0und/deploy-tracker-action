@@ -16061,6 +16061,8 @@ const main = async () => {
       ephemeral: core.getInput('ephemeral') || undefined,
     }
 
+    console.log(body, 'body');
+
     await fetch("https://api.deploytracker.io/notify", {
       method: "POST",
       headers: {
