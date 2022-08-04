@@ -31,18 +31,18 @@ const main = async () => {
         const body = {
             application: application || github.context.payload.repository.name,
             status: status || 'SUCCESS',
-            environment: environment,
+            environment: environment || undefined,
             message: message || github.context.payload?.head_commit?.message || github.context.payload?.commits?.[0]?.message,
             triggeredBy: triggeredBy || github.context.actor,
             branch: branch || getBranchName(github.context.ref),
-            version: version,
-            ticket: ticket,
+            version: version || undefined,
+            ticket: ticket || undefined,
             jobUrl: jobUrl || github.context.payload?.head_commit?.url,
             jobId: jobId || github.context.runId,
-            tags: tags,
-            teams: teams,
-            silent: silent,
-            ephemeral: ephemeral,
+            tags: tags || undefined,
+            teams: teams || undefined,
+            silent: silent || undefined,
+            ephemeral: ephemeral || undefined,
         }
 
         console.log(body, 'body');
