@@ -2,6 +2,9 @@ name: 'Deploy Tracker Action'
 description: 'Deploy Tracker '
 
 inputs:
+  dt-access-token:
+    description: 'Deploy Tracker Access Token'
+    required: true
   application:
     description: 'Application Name'
     required: false
@@ -18,3 +21,8 @@ inputs:
 runs:
   using: 'node16'
   main: 'dist/index.js'
+
+
+
+
+

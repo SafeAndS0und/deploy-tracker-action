@@ -8960,12 +8960,12 @@ var __webpack_exports__ = {};
 // import fetch from 'node-fetch'
 
 try {
+    const dtAccessToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('dt-access-token');
     const application = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('application');
     const branch = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('branch');
     const triggeredBy = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('triggeredBy');
     const message = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('message');
-    console.log(application, branch, triggeredBy, message);
-    console.log(JSON.stringify(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context, undefined, 2));
+    console.log(dtAccessToken, application, branch, triggeredBy, message);
 } catch (error) {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
