@@ -16088,6 +16088,7 @@ const main = async () => {
       console.log('Error: ', text)
       console.log('Status: ', response.status)
       console.log('Body: ', body)
+      core.setFailed(text);
     }
 
   } catch (error) {
