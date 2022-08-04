@@ -16039,7 +16039,15 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 const notifyDeployTrackerEndpoint = "https://api.deploytracker.io/notify"
 
 const getBranchName = (ref) => {
-  return ref.slice(ref.lastIndexOf('/') + 1)
+  if (ref.includes('refs/heads/')) {
+    return ref.slice(ref.lastIndexOf('/') + 1)
+  }
+}
+
+const getVersionFromTag = (ref) => {
+  if (ref.includes('refs/tags/')) {
+    return ref.slice(ref.lastIndexOf('/') + 1)
+  }
 }
 
 const handleBooleanValue = (str) => {
@@ -16075,7 +16083,7 @@ const main = async () => {
       message: core.getInput('message') || github.context.payload.head_commit.message || github.context.payload.commits[0].message,
       triggeredBy: core.getInput('triggeredBy') || github.context.actor,
       branch: core.getInput('branch') || getBranchName(github.context.ref) || undefined,
-      version: core.getInput('version') || undefined,
+      version: core.getInput('version') || getVersionFromTag(github.context.ref) || undefined,
       ticket: core.getInput('ticket') || undefined,
       jobUrl: core.getInput('jobUrl') || github.context.payload.head_commit.url,
       jobId: core.getInput('jobId') || github.context.runId.toString(),
@@ -16084,9 +16092,6 @@ const main = async () => {
       silent: handleBooleanValue(core.getInput('silent')),
       ephemeral: handleBooleanValue(core.getInput('ephemeral')),
     }
-
-    console.log(body);
-    console.log(process?.env)
 
     const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
