@@ -16036,6 +16036,12 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 
 
 
+const getBranchName = (ref) => {
+    if (ref.indexOf('/refs/heads/') > -1) {
+        return ref.slice('/refs/heads/'.length);
+    }
+}
+
 const main = async () => {
     try {
         const dtAccessToken = core.getInput('dt-access-token');
@@ -16057,21 +16063,23 @@ const main = async () => {
         console.log(JSON.stringify(github.context, null, 2));
 
         const body = {
-            application: application || '',
+            application: application || github.context.payload.repository.name,
             status: status || 'SUCCESS',
-            environment: environment || '',
-            message: message || '',
-            triggeredBy: triggeredBy || '',
-            branch: branch || '',
-            version: version || '',
-            ticket: ticket || '',
-            jobUrl: jobUrl || '',
-            jobId: jobId || '',
-            tags: tags || '',
-            teams: teams || '',
-            silent: silent || '',
-            ephemeral: ephemeral || '',
+            environment: environment,
+            message: message || github.context.payload.head_commit.message || github.context.payload.commits[0].message,
+            triggeredBy: triggeredBy || github.context.actor,
+            branch: branch || getBranchName(github.context.ref),
+            version: version,
+            ticket: ticket,
+            jobUrl: jobUrl || github.context.payload.head_commit.url,
+            jobId: jobId || github.context.runId,
+            tags: tags,
+            teams: teams,
+            silent: silent,
+            ephemeral: ephemeral,
         }
+
+        console.log(body, 'body');
 
         const response = await fetch("https://api.deploytracker.io/notify", {
             method: "POST",
@@ -16081,7 +16089,7 @@ const main = async () => {
             },
             body: JSON.stringify(body),
         })
-        console.log(response.status);
+        console.log(response.status, 'status');
 
     } catch (error) {
         core.setFailed(error.message);
