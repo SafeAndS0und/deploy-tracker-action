@@ -38,7 +38,7 @@ const main = async () => {
             version: version || undefined,
             ticket: ticket || undefined,
             jobUrl: jobUrl || github.context.payload?.head_commit?.url,
-            jobId: jobId || github.context.runId,
+            jobId: jobId || github.context.runId.toString(),
             tags: tags || undefined,
             teams: teams || undefined,
             silent: silent || undefined,
@@ -54,7 +54,7 @@ const main = async () => {
                 "dt-access-token": dtAccessToken,
             },
             body: JSON.stringify(body),
-        })
+        }).catch(e => console.log(e))
         console.log(response.status, 'status');
 
     } catch (error) {
