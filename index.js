@@ -28,7 +28,7 @@ const getJobUrl = (repoUrl, runId) => {
   if (!repoUrl || !runId) {
     return
   }
-  return repoUrl + '/runs/' + runId
+  return repoUrl + '/actions/runs/' + runId
 }
 
 // https://docs.github.com/en/actions/learn-github-actions/contexts#job-context
