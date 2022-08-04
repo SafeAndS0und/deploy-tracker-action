@@ -63,6 +63,14 @@ You can override any field using the inputs.
 Some fields also serve different roles (for example we can deduce ticket by looking for a ticket-id pattern in branch or commit message) 
 All of this is better described in the [Deploy Tracker documentation](https://deploytracker.io/documentation/api-and-integrations/notification-parameters).
 
+If you want to stop Deploy Tracker from using the default value of a given field, set its value to '-', like so:
+```yaml
+    uses: SafeAndS0und/deploy-tracker-action@1.0.0
+    with:
+      jobId: '-'
+      triggeredBy: '-'
+```
+Note that if you just don't want to see given field in a notification, you can use [notification customizations](https://deploytracker.io/documentation/web-dashboard/customizations)
 Also feel free to take a look at the `index.js` to see how the default values are derived from Github context.
  
 
