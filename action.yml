@@ -16,14 +16,5 @@ inputs:
     required: false
 
 runs:
-  using: composite
-  steps:
-  - run: |
-      chmod +x "${{ github.action_path }}/notify.sh"
-      "${{ github.action_path }}/notify.sh"
-    shell: bash
-    env:
-      APPLICATION: ${{ inputs.application || github.event.repository.name  }}
-      BRANCH: ${{ inputs.branch || github.ref_name }}
-      TRIGGERED_BY: ${{ inputs.triggeredBy || github.actor }}
-      MESSAGE: ${{ inputs.message || github.event.head_commit.message }}
+  using: 'node16'
+  main: 'index.js'
