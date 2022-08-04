@@ -6,6 +6,10 @@
   "author": "Nikodem Lorenz <nikodem.lorenz@gmail.com>",
   "license": "MIT",
   "private": false,
+  "type": "module",
+  "scripts": {
+    "build": "ncc build index.js --license licenses.txt"
+  },
   "dependencies": {
     "@actions/core": "^1.9.0",
     "@actions/github": "^5.0.3",
