@@ -38,7 +38,7 @@ jobs:
         uses: SafeAndS0und/deploy-tracker-action@1.0.0
         with:
           dt-access-token: ${{ secrets.DT_ACCESS_TOKEN }}
-          status: 'START'
+          status: 'STARTED'
 
 
   end-deployment:
@@ -60,7 +60,8 @@ We recommend to make use of Github's [action secrets](https://docs.github.com/en
 ### Inputs
 Pretty much all inputs besides the access token have a handy default values assigned using [Github Context](https://docs.github.com/en/actions/learn-github-actions/contexts#job-context). 
 You can override any field using the inputs.
-Some fields also serve different roles (for example we can deduce ticket by looking for a ticket-id pattern in branch or commit message) 
+Some fields also serve different roles or be used for setting other fields 
+(for example we can deduce ticket by looking for a ticket-id pattern in branch or commit message, or we can deduce environment based on branch name) 
 All of this is better described in the [Deploy Tracker documentation](https://deploytracker.io/documentation/api-and-integrations/notification-parameters).
 
 If you want to stop Deploy Tracker from using the default value of a given field, set its value to '-', like so:
@@ -92,6 +93,7 @@ Also feel free to take a look at the `index.js` to see how the default values ar
 | silent          | false                               | true              | If 'true' (as string), the message won't be sent to Slack               |
 | ephemeral       | false                               | true              | If 'true' (as string), the message won't be saved in database           |
 
+If you have any problems, please double check all fields with the [documentation](https://deploytracker.io/documentation/api-and-integrations/notification-parameters). 
 
 Example of overriding certain values:
 ```yaml

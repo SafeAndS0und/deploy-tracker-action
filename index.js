@@ -39,7 +39,7 @@ const translateJobStatus = (str) => {
     case "failure":
       return "FAILURE"
     case "cancelled":
-      return "CANCEL"
+      return "CANCELLED"
     default:
       return str
   }
