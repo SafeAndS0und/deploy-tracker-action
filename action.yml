@@ -35,6 +35,12 @@ inputs:
   jobId:
     description: 'Job ID'
     required: false
+  commitId:
+    description: 'Commit ID'
+    required: false
+  compareUrl:
+    description: 'Compare URL'
+    required: false
   tags:
     description: 'Tags'
     required: false

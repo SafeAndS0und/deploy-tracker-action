@@ -88,6 +88,8 @@ Also feel free to take a look at the `index.js` to see how the default values ar
 | ticket          |                                     | DT-1              | Ticket name or ID - It can be used for detecting and linking tickets    |
 | jobUrl          | see index.js                        | https://github... | If provided, will add a hyperlink to the notification                   |
 | jobId           | context.runId                       | W2sb4d            |                                                                         |
+| commitId        | context.payload.head_commit.id      | j2ds2A            | A hash of the commit.                                                   |
+| compareUrl      | context.payload.compare             | https://github... | If provided, commitId field become a hyperlink.                         |
 | tags            |                                     | tag1, tag2        | Comma-separated list of tags associated with the deployment             |
 | teams           |                                     | walter, gus.fring | Comma-separated list of teams that are related to this deployment       |
 | silent          | false                               | true              | If 'true' (as string), the message won't be sent to Slack               |

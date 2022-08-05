@@ -70,6 +70,8 @@ const main = async () => {
       ticket: getInputValue('ticket') ,
       jobUrl: getInputValue('jobUrl', getJobUrl(github.context.payload.repository.html_url, github.context.runId) || github.context.payload?.head_commit?.url),
       jobId: getInputValue('jobId', github.context.runId.toString()),
+      commitId: getInputValue('commitId', github.context.payload?.head_commit?.id),
+      compareUrl: getInputValue('compareUrl', github.context.payload.compare),
       tags: handleArrayValue(getInputValue('tags')),
       teams: handleArrayValue(getInputValue('teams')),
       silent: handleBooleanValue(getInputValue('silent')),
