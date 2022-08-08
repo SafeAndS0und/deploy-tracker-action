@@ -38,7 +38,6 @@ jobs:
         uses: SafeAndS0und/deploy-tracker-action@1.0.0
         with:
           dt-access-token: ${{ secrets.DT_ACCESS_TOKEN }}
-          status: 'STARTED'
 
 
   end-deployment:
@@ -79,7 +78,7 @@ Also feel free to take a look at the `index.js` to see how the default values ar
 |-----------------|-------------------------------------|-------------------|-------------------------------------------------------------------------|
 | dt-access-token |                                     | eyJhbGciOiJIUz... | Authorizes you and your project                                         |
 | application     | context.payload.repository.name     | trading-api       | Name of the deployed application or service                             |
-| status          | "SUCCESS"                           | SUCCESS           | Status of the deployment, recommended to use ${{ job.status }} variable |
+| status          | "STARTED"                           | SUCCESS           | Status of the deployment, recommended to use ${{ job.status }} variable |
 | environment     |                                     | STAGING           | Environment to which the application is being deployed on               |
 | message         | context.payload.head_commit.message | Fixed something   | Message describing changes, usually commit message                      |
 | triggeredBy     | context.actor                       | walter.white      | Name of the person who triggered the deployment                         |
@@ -103,6 +102,6 @@ Example of overriding certain values:
     with:
       dt-access-token: ${{ secrets.DT_ACCESS_TOKEN }}
       environment: 'PROD'
-      status: ${{ job.status }}
+      status: 'FAILURE'
       jobId: ${{ github.run_number }}
 ```

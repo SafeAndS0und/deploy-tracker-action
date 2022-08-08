@@ -41,7 +41,7 @@ const translateJobStatus = (str) => {
     case "cancelled":
       return "CANCELLED"
     default:
-      return str
+      return 'STARTED'
   }
 }
 
@@ -61,7 +61,7 @@ const main = async () => {
 
     const body = {
       application: getInputValue('application', github.context.payload.repository.name),
-      status: translateJobStatus(getInputValue('status', 'SUCCESS')),
+      status: translateJobStatus(getInputValue('status', 'STARTED')),
       environment: getInputValue('environment'),
       message: getInputValue('message', github.context.payload?.head_commit?.message || github.context.payload?.commits?.[0]?.message) ,
       triggeredBy: getInputValue('triggeredBy', github.context.actor),
