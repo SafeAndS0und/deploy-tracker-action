@@ -78,8 +78,6 @@ const main = async () => {
       ephemeral: handleBooleanValue(getInputValue('ephemeral')),
     }
 
-    console.log(body)
-
     const response = await fetch(notifyDeployTrackerEndpoint, {
       method: "POST",
       headers: {
