@@ -2,28 +2,63 @@ name: 'Deploy Tracker Action'
 description: 'Deploy Tracker '
 
 inputs:
+  dt-access-token:
+    description: 'Deploy Tracker Access Token'
+    required: true
   application:
     description: 'Application Name'
     required: false
-  branch:
-    description: 'Branch name'
+  status:
+    description: 'Status of the deployment'
     required: false
-  triggeredBy:
-    description: 'Name of the person who triggered the action'
+  environment:
+    description: 'Environment'
     required: false
   message:
     description: 'Message'
     required: false
+  triggeredBy:
+    description: 'Name of the person who triggered the action'
+    required: false
+  branch:
+    description: 'Branch name'
+    required: false
+  version:
+    description: 'Version'
+    required: false
+  ticket:
+    description: 'Ticket'
+    required: false
+  jobUrl:
+    description: 'Job URL'
+    required: false
+  jobId:
+    description: 'Job ID'
+    required: false
+  commitId:
+    description: 'Commit ID'
+    required: false
+  compareUrl:
+    description: 'Compare URL'
+    required: false
+  tags:
+    description: 'Tags'
+    required: false
+  teams:
+    description: 'Teams'
+    required: false
+  silent:
+    description: "Silent - notification won't be sent"
+    required: false
+  ephemeral:
+    description: "Ephemeral - notification won't be saved in Deploy Tracker's database"
+    required: false
 
 runs:
-  using: composite
-  steps:
-  - run: |
-      chmod +x "${{ github.action_path }}/notify.sh"
-      "${{ github.action_path }}/notify.sh"
-    shell: bash
-    env:
-      APPLICATION: ${{ inputs.application || github.event.repository.name  }}
-      BRANCH: ${{ inputs.branch || github.ref_name }}
-      TRIGGERED_BY: ${{ inputs.triggeredBy || github.actor }}
-      MESSAGE: ${{ inputs.message || github.event.head_commit.message }}
+  using: 'node16'
+  main: 'dist/index.js'
+
+
+
+
+
