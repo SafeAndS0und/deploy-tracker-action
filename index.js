@@ -59,6 +59,7 @@ const main = async () => {
   try {
     const dtAccessToken = core.getInput('dt-access-token');
 
+    console.log(translateJobStatus(getInputValue('status', 'STARTED')), getInputValue('status'));
     const body = {
       application: getInputValue('application', github.context.payload.repository.name),
       status: translateJobStatus(getInputValue('status', 'STARTED')),
